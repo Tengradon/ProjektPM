@@ -2,6 +2,10 @@ package com.example.tengradon.asystentgierlosowych;
 
 import java.util.Date;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 public class Results {
 
     private int id;
