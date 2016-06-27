@@ -2,10 +2,9 @@ package com.example.tengradon.asystentgierlosowych;
 
 import java.util.Date;
 
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
+/**
+ * Created by Rafal on 2016-06-27.
+ */
 public class Results {
 
     private int id;
