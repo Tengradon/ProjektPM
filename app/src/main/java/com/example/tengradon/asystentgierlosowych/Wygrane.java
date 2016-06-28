@@ -3,6 +3,7 @@ package com.example.tengradon.asystentgierlosowych;
 /**
  * Created by Mateusz on 2016-06-28.
  */
+
 public class Wygrane {
     private int id;
     private int idKuponu;
