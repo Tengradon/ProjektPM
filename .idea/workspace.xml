@@ -49,12 +49,26 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GryLiczbowe.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="GryLiczbowe.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/tengradon/asystentgierlosowych/GryLiczbowe.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.29262394">
+            <state vertical-scroll-proportion="0.0">
               <caret line="11" column="46" selection-start-line="11" selection-start-column="46" selection-end-line="11" selection-end-column="46" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DBHelper.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/tengradon/asystentgierlosowych/DBHelper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.39903265">
+              <caret line="15" column="3" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1721#1722#0" expanded="true" />
+                <element signature="e#1769#1770#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -1625,6 +1639,7 @@
       <list>
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/tengradon/asystentgierlosowych/Results.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/tengradon/asystentgierlosowych/GryLiczbowe.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/tengradon/asystentgierlosowych/DBHelper.java" />
       </list>
     </option>
   </component>
@@ -1962,9 +1977,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/tengradon/asystentgierlosowych/GryLiczbowe.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.29262394">
+        <state vertical-scroll-proportion="0.0">
           <caret line="11" column="46" selection-start-line="11" selection-start-column="46" selection-end-line="11" selection-end-column="46" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/tengradon/asystentgierlosowych/DBHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.39903265">
+          <caret line="15" column="3" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1721#1722#0" expanded="true" />
+            <element signature="e#1769#1770#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
