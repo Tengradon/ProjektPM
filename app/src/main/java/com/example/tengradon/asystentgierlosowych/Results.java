@@ -1,6 +1,7 @@
 package com.example.tengradon.asystentgierlosowych;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -73,7 +74,24 @@ public class Results {
         return wylosowaneLiczby;
     }
 
+    public ArrayList<Integer> getWylosowaneLiczbyLista(){
+        ArrayList<Integer> integerArrayList = new ArrayList<>();
+        String[] liczby = wylosowaneLiczby.split("|");
+        for(int i = 0; i < liczby.length; i++){
+            integerArrayList.add(Integer.parseInt(liczby[i]));
+        }
+        return integerArrayList;
+    }
+
     public void setWylosowaneLiczby(String wylosowaneLiczby) {
         this.wylosowaneLiczby = wylosowaneLiczby;
+    }
+
+    public static String wylosowaneLiczbyZListy(ArrayList<Integer> typowaneNumery){
+        String mojeTypy = "";
+        for(int i = 0; i < typowaneNumery.size(); i++){
+            mojeTypy += typowaneNumery + "|";
+        }
+        return mojeTypy;
     }
 }
