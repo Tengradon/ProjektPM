@@ -30,8 +30,8 @@ public class Type {
         return id;
     }
 
-    public TypGry getTypGry() {
-        return typGry;
+    public int getTypGry() {
+        return typGry.getValue();
     }
 
     public Date getDataPierwszegoLosowania() {
