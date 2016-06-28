@@ -26,28 +26,55 @@ public class Type {
         this.typowaneNumery = typowaneNumery;
     }
 
+    public Type() {
+    }
+
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getTypGry() {
         return typGry.getValue();
     }
 
-    public Date getDataPierwszegoLosowania() {
-        return dataPierwszegoLosowania;
+    public String getDataPierwszegoLosowania() {
+        String data;
+        data = String.valueOf(dataPierwszegoLosowania);
+        return data;
     }
 
-    public Date getDataOstatniegoLosowania() {
-        return dataOstatniegoLosowania;
+    public String getDataOstatniegoLosowania() {
+        String data;
+        data = String.valueOf(dataOstatniegoLosowania);
+        return data;
     }
 
     public String getTypowaneNumery() {
         return typowaneNumery;
     }
 
-    public void setTypGry(TypGry typGry) {
-        this.typGry = typGry;
+    public void setTypGry(int typGry) {
+        switch (typGry) {
+            case 1:
+                this.typGry = TypGry.LOTTO;
+                break;
+            case 2:
+                this.typGry = TypGry.EKSTRA_PENSJA;
+                break;
+            case 3:
+                this.typGry = TypGry.MULTI_MULTI14;
+                break;
+            case 4:
+                this.typGry = TypGry.MULTI_MULTI22;
+                break;
+            case 5:
+                this.typGry = TypGry.MINI_LOTTO;
+                break;
+        }
     }
 
     public void setDataPierwszegoLosowania(Date dataPierwszegoLosowania) {
