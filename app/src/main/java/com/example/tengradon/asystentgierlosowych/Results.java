@@ -1,10 +1,9 @@
 package com.example.tengradon.asystentgierlosowych;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * Created by Rafal on 2016-06-27.
- */
+
 public class Results {
 
     private int id;
@@ -25,6 +24,9 @@ public class Results {
         this.wylosowaneLiczby = wylosowaneLiczby;
     }
 
+    public Results() {
+    }
+
     public int getId() {
         return id;
     }
@@ -33,16 +35,34 @@ public class Results {
         this.id = id;
     }
 
-    public TypGry getTypGry() {
-        return typGry;
+    public int getTypGry() {
+        return typGry.getValue();
     }
 
-    public void setTypGry(TypGry typGry) {
-        this.typGry = typGry;
+    public void setTypGry(int typGry) {
+        switch (typGry) {
+            case 1:
+                this.typGry = TypGry.LOTTO;
+                break;
+            case 2:
+                this.typGry = TypGry.EKSTRA_PENSJA;
+                break;
+            case 3:
+                this.typGry = TypGry.MULTI_MULTI14;
+                break;
+            case 4:
+                this.typGry = TypGry.MULTI_MULTI22;
+                break;
+            case 5:
+                this.typGry = TypGry.MINI_LOTTO;
+                break;
+        }
     }
 
-    public Date getDataLosowania() {
-        return dataLosowania;
+    public String getDataLosowania() {
+        String data;
+        data = String.valueOf(dataLosowania);
+        return data;
     }
 
     public void setDataLosowania(Date dataLosowania) {
