@@ -19,6 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".LottoActivity"></activity>
+        <activity android:name=".MultiMultiActivity"></activity>
     </application>
 
 </manifest>

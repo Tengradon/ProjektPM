@@ -50,6 +50,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void pokazEkranMultiMulti(View view){
+        Intent intent = new Intent(MainActivity.this, MultiMultiActivity.class);
+        startActivity(intent);
+    }
+
     public void pokazWyborGry(View view){
         Fragment fragment;
         FragmentManager fragmentManager = getFragmentManager();
