@@ -18,18 +18,65 @@ import java.util.Date;
  */
 public class ObrabianieWynikow extends AsyncTask<String, Void, String> {
     private ArrayList<Integer> wyniki;
+    private boolean isReady = false;
     private TypGry typGry;
     private URL url;
     private Date dataLosowania;
 
     public ObrabianieWynikow(TypGry typGry) {
         this.typGry = typGry;
-        wyniki = new ArrayList<Integer>();
+        wyniki = new ArrayList<>();
         dataLosowania = new Date();
     }
 
     public ArrayList<Integer> getWyniki() {
+        while(!isReady)try { Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace(); }
+        System.out.println(typGry);
         return wyniki;
+    }
+
+    public int sprawdzTypy(ArrayList<Integer> typowaneWyniki){
+        int iloscTrafien = 0;
+        int j = 0;
+        Collections.sort(typowaneWyniki);
+        for(int i = 0; i < typowaneWyniki.size(); i++){
+            if(j == wyniki.size())break;
+            if(typowaneWyniki.get(i) == wyniki.get(j)){
+                iloscTrafien++;
+                j++;
+            }
+            else if(typowaneWyniki.get(i) < wyniki.get(j)){
+                continue;
+            }
+            else {
+                j++;
+                i--;
+                continue;
+            }
+        }
+        return iloscTrafien;
+    }
+
+    public int sprawdzTypy(ArrayList<Integer> typowaneWyniki, ArrayList<Integer> wyniki){
+        int iloscTrafien = 0;
+        int j = 0;
+        Collections.sort(typowaneWyniki);
+        for(int i = 0; i < typowaneWyniki.size(); i++){
+            if(j == wyniki.size())break;
+            if(typowaneWyniki.get(i) == wyniki.get(j)){
+                iloscTrafien++;
+                j++;
+            }
+            else if(typowaneWyniki.get(i) < wyniki.get(j)){
+                continue;
+            }
+            else {
+                j++;
+                i--;
+                continue;
+            }
+        }
+        return iloscTrafien;
     }
 
     @Override
@@ -71,6 +118,9 @@ public class ObrabianieWynikow extends AsyncTask<String, Void, String> {
         }catch (ParseException e) {
             e.printStackTrace();
         }
+        System.out.println(typGry);
+        System.out.println(wyniki.get(1));
+        isReady = true;
         return null;
     }
 }
