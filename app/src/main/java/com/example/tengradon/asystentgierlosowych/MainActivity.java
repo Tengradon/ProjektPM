@@ -3,6 +3,7 @@ package com.example.tengradon.asystentgierlosowych;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -42,6 +43,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void pokazEkranLotto(View view){
+        Intent intent = new Intent(MainActivity.this, LottoActivity.class);
+        startActivity(intent);
     }
 
     public void pokazWyborGry(View view){
