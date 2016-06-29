@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:id="@+id/editText"
+        android:text="wybierz grę"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lotto"
+        android:id="@+id/lotto"
+        android:layout_weight="1"
+        android:layout_marginTop="32dp"
+        android:layout_gravity="center_horizontal"
+        android:onClick="pokazEkranLotto"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Multi-Multi"
+        android:id="@+id/multi"
+        android:layout_weight="1"
+        android:onClick="pokazEkranMultiMulti"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ekstra pensja"
+        android:id="@+id/esktra"
+        android:layout_weight="1"
+        android:onClick="pokazEkranEkstraPensja"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mini lotto"
+        android:id="@+id/mini"
+        android:onClick="pokazEkranMiniLotto"
+        android:layout_weight="1"
+        android:layout_gravity="center_horizontal" />
+</LinearLayout>

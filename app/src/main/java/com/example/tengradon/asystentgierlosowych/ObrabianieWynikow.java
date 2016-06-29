@@ -118,8 +118,11 @@ public class ObrabianieWynikow extends AsyncTask<String, Void, String> {
         }catch (ParseException e) {
             e.printStackTrace();
         }
+<<<<<<< HEAD
         System.out.println(typGry);
         System.out.println(wyniki.get(1));
+=======
+>>>>>>> origin/master
         isReady = true;
         return null;
     }

@@ -1,4 +1,5 @@
 package com.example.tengradon.asystentgierlosowych;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -10,20 +11,23 @@ public class Type {
     private Date dataPierwszegoLosowania;
     private Date dataOstatniegoLosowania;
     private String typowaneNumery;
+    private int iloscSkreslonychLiczb;
 
-    public Type(TypGry typGry, Date dataPierwszegoLosowania, Date dataOstatniegoLosowania, String typowaneNumery) {
-        this.typGry = typGry;
-        this.dataPierwszegoLosowania = dataPierwszegoLosowania;
-        this.dataOstatniegoLosowania = dataOstatniegoLosowania;
-        this.typowaneNumery = typowaneNumery;
-    }
-
-    public Type(int id, TypGry typGry, Date dataPierwszegoLosowania, Date dataOstatniegoLosowania, String typowaneNumery) {
+    public Type(int id, TypGry typGry, Date dataPierwszegoLosowania, Date dataOstatniegoLosowania, String typowaneNumery, int iloscSkreslonychLiczb) {
         this.id = id;
         this.typGry = typGry;
         this.dataPierwszegoLosowania = dataPierwszegoLosowania;
         this.dataOstatniegoLosowania = dataOstatniegoLosowania;
         this.typowaneNumery = typowaneNumery;
+        this.iloscSkreslonychLiczb = iloscSkreslonychLiczb;
+    }
+
+    public Type(TypGry typGry, Date dataPierwszegoLosowania, Date dataOstatniegoLosowania, String typowaneNumery, int iloscSkreslonychLiczb) {
+        this.typGry = typGry;
+        this.dataPierwszegoLosowania = dataPierwszegoLosowania;
+        this.dataOstatniegoLosowania = dataOstatniegoLosowania;
+        this.typowaneNumery = typowaneNumery;
+        this.iloscSkreslonychLiczb = iloscSkreslonychLiczb;
     }
 
     public Type() {
@@ -41,6 +45,8 @@ public class Type {
         return typGry.getValue();
     }
 
+    public TypGry getTypGryOriginal(){return typGry;}
+
     public String getDataPierwszegoLosowania() {
         String data;
         data = String.valueOf(dataPierwszegoLosowania);
@@ -51,6 +57,23 @@ public class Type {
         String data;
         data = String.valueOf(dataOstatniegoLosowania);
         return data;
+    }
+
+    public int getIloscSkreslonychLiczb() {
+        return iloscSkreslonychLiczb;
+    }
+
+    public void setIloscSkreslonychLiczb(int iloscSkreslonychLiczb) {
+        this.iloscSkreslonychLiczb = iloscSkreslonychLiczb;
+    }
+
+    public ArrayList<Integer> getTypowaneNumeryLista(){
+        ArrayList<Integer> integerArrayList = new ArrayList<>();
+        String[] liczby = typowaneNumery.split("|");
+        for(int i = 0; i < liczby.length; i++){
+            integerArrayList.add(Integer.parseInt(liczby[i]));
+        }
+        return integerArrayList;
     }
 
     public String getTypowaneNumery() {
@@ -87,5 +110,13 @@ public class Type {
 
     public void setTypowaneNumery(String typowaneNumery) {
         this.typowaneNumery = typowaneNumery;
+    }
+
+    public static String typowaneNumeryZListy(ArrayList<Integer> typowaneNumery){
+        String mojeTypy = "";
+        for(int i = 0; i < typowaneNumery.size(); i++){
+            mojeTypy += typowaneNumery + "|";
+        }
+        return mojeTypy;
     }
 }
