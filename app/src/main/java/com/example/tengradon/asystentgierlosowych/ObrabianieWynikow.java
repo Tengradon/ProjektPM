@@ -18,6 +18,7 @@ import java.util.Date;
  */
 public class ObrabianieWynikow extends AsyncTask<String, Void, String> {
     private ArrayList<Integer> wyniki;
+    private boolean isReady = false;
     private TypGry typGry;
     private URL url;
     private Date dataLosowania;
@@ -29,6 +30,8 @@ public class ObrabianieWynikow extends AsyncTask<String, Void, String> {
     }
 
     public ArrayList<Integer> getWyniki() {
+        while(!isReady)try { Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace(); }
+        System.out.println(typGry);
         return wyniki;
     }
 
@@ -71,6 +74,7 @@ public class ObrabianieWynikow extends AsyncTask<String, Void, String> {
         }catch (ParseException e) {
             e.printStackTrace();
         }
+        isReady = true;
         return null;
     }
 }
