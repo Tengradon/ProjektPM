@@ -192,6 +192,4 @@
         android:layout_weight="1"
         android:layout_row="18"
         android:layout_column="13"/>
-
-
 </GridLayout>
