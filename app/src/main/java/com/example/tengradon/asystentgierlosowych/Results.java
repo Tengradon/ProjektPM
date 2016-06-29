@@ -1,10 +1,10 @@
 package com.example.tengradon.asystentgierlosowych;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
-/**
- * Created by Rafal on 2016-06-27.
- */
+
 public class Results {
 
     private int id;
@@ -25,6 +25,9 @@ public class Results {
         this.wylosowaneLiczby = wylosowaneLiczby;
     }
 
+    public Results() {
+    }
+
     public int getId() {
         return id;
     }
@@ -37,12 +40,30 @@ public class Results {
         return typGry.getValue();
     }
 
-    public void setTypGry(TypGry typGry) {
-        this.typGry = typGry;
+    public void setTypGry(int typGry) {
+        switch (typGry) {
+            case 1:
+                this.typGry = TypGry.LOTTO;
+                break;
+            case 2:
+                this.typGry = TypGry.EKSTRA_PENSJA;
+                break;
+            case 3:
+                this.typGry = TypGry.MULTI_MULTI14;
+                break;
+            case 4:
+                this.typGry = TypGry.MULTI_MULTI22;
+                break;
+            case 5:
+                this.typGry = TypGry.MINI_LOTTO;
+                break;
+        }
     }
 
-    public Date getDataLosowania() {
-        return dataLosowania;
+    public String getDataLosowania() {
+        String data;
+        data = String.valueOf(dataLosowania);
+        return data;
     }
 
     public void setDataLosowania(Date dataLosowania) {
@@ -53,7 +74,24 @@ public class Results {
         return wylosowaneLiczby;
     }
 
+    public ArrayList<Integer> getWylosowaneLiczbyLista(){
+        ArrayList<Integer> integerArrayList = new ArrayList<>();
+        String[] liczby = wylosowaneLiczby.split("|");
+        for(int i = 0; i < liczby.length; i++){
+            integerArrayList.add(Integer.parseInt(liczby[i]));
+        }
+        return integerArrayList;
+    }
+
     public void setWylosowaneLiczby(String wylosowaneLiczby) {
         this.wylosowaneLiczby = wylosowaneLiczby;
+    }
+
+    public static String wylosowaneLiczbyZListy(ArrayList<Integer> typowaneNumery){
+        String mojeTypy = "";
+        for(int i = 0; i < typowaneNumery.size(); i++){
+            mojeTypy += typowaneNumery + "|";
+        }
+        return mojeTypy;
     }
 }
