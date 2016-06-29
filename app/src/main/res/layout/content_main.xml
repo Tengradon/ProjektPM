@@ -12,8 +12,30 @@
     tools:context="com.example.tengradon.asystentgierlosowych.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="Nowy kupon"
+        android:id="@+id/addButton"
+        android:layout_marginTop="32dp"
+        android:onClick="pokazWyborGry"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="46dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ostanie wyniki"
+        android:id="@+id/latestButton"
+        android:onClick="pokazOstatnieWyniki"
+        android:layout_alignTop="@+id/addButton"
+        android:layout_toEndOf="@+id/addButton" />
+
+    <FrameLayout
+        android:id="@+id/fragment_place"
+        android:layout_marginTop="18dp"
+        android:layout_below="@+id/addButton"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </RelativeLayout>

@@ -1,5 +1,8 @@
 package com.example.tengradon.asystentgierlosowych;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -39,5 +42,25 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void pokazWyborGry(View view){
+        Fragment fragment;
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragment = new WyborGryFragment();
+        fragmentTransaction.replace(R.id.fragment_place, fragment, "PWG");
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
+    public void pokazOstatnieWyniki(View view){
+        Fragment fragment;
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragment = new OstatnieWynikiFragment();
+        fragmentTransaction.replace(R.id.fragment_place, fragment, "POW");
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 }
