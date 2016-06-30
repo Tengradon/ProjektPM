@@ -2,9 +2,14 @@ package com.example.tengradon.asystentgierlosowych;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 /**
  * Created by Tengradon on 2016-06-29.
@@ -72,11 +77,20 @@ public class MultiMultiActivity extends Activity {
         liczba8 = (EditText)findViewById(R.id.multiMulti8Liczba);
         liczba9 = (EditText)findViewById(R.id.multiMulti9Liczba);
         liczba10 = (EditText)findViewById(R.id.multiMulti10Liczba);
+        setBoundries();
     }
 
 
     public void saveMiniLottoNumbers(View view){
-
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Type type = null;
+        try {
+            type = new Type(TypGry.MULTI_MULTI14, simpleDateFormat.parse(dataStart.getText().toString()), simpleDateFormat.parse(dataKoniec.getText().toString()), Type.typowaneNumeryZListy(typowaneNumery()), ileLiczb);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        DBHelper dbHelper = new DBHelper(this);
+        dbHelper.wstawType(type);
     }
 
     private void pokazUkrytePola(){
@@ -135,6 +149,46 @@ public class MultiMultiActivity extends Activity {
         liczba8.setVisibility(pole7);
         liczba9.setVisibility(pole8);
         liczba10.setVisibility(pole9);
+    }
+
+    private void setBoundries(){
+        liczba1.setFilters(new InputFilter[]{ new InputFilterMinMax(1, 80)});
+        liczba2.setFilters(new InputFilter[]{new InputFilterMinMax(1, 80)});
+        liczba3.setFilters(new InputFilter[]{new InputFilterMinMax(1, 80)});
+        liczba4.setFilters(new InputFilter[]{new InputFilterMinMax(1, 80)});
+        liczba5.setFilters(new InputFilter[]{new InputFilterMinMax(1, 80)});
+        liczba6.setFilters(new InputFilter[]{new InputFilterMinMax(1, 80)});
+        liczba7.setFilters(new InputFilter[]{new InputFilterMinMax(1, 80)});
+        liczba8.setFilters(new InputFilter[]{new InputFilterMinMax(1, 80)});
+        liczba9.setFilters(new InputFilter[]{new InputFilterMinMax(1, 80)});
+        liczba10.setFilters(new InputFilter[]{new InputFilterMinMax(1, 80)});
+        dataKoniec.addTextChangedListener(new DateTextWatcher(dataKoniec));
+        dataKoniec.setFilters(new InputFilter[]{
+                new DateTextInputFilter()
+        });
+        dataStart.addTextChangedListener(new DateTextWatcher(dataStart));
+        dataStart.setFilters(new InputFilter[]{
+                new DateTextInputFilter()
+        });
+    }
+
+    private ArrayList<Integer> typowaneNumery() {
+        ArrayList<Integer> numery = new ArrayList<>();
+        numery.add(Integer.parseInt(liczba1.getText().toString()));
+        if (ileLiczb > 1) numery.add(Integer.parseInt(liczba2.getText().toString()));
+        if (ileLiczb > 2) numery.add(Integer.parseInt(liczba3.getText().toString()));
+        if (ileLiczb > 3) numery.add(Integer.parseInt(liczba4.getText().toString()));
+        if (ileLiczb > 4) numery.add(Integer.parseInt(liczba5.getText().toString()));
+        if (ileLiczb > 5) numery.add(Integer.parseInt(liczba6.getText().toString()));
+        if (ileLiczb > 6) numery.add(Integer.parseInt(liczba7.getText().toString()));
+        if (ileLiczb > 7) numery.add(Integer.parseInt(liczba8.getText().toString()));
+        if (ileLiczb > 8) numery.add(Integer.parseInt(liczba9.getText().toString()));
+        if (ileLiczb > 9) numery.add(Integer.parseInt(liczba10.getText().toString()));
+        return numery;
+    }
+
+    public void finisActivity(View view){
+        finish();
     }
 }
 
