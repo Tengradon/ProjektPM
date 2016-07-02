@@ -1,16 +1,23 @@
 package com.example.tengradon.asystentgierlosowych;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.text.InputFilter;
 import android.transition.Visibility;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Mateusz on 2016-06-30.
@@ -20,6 +27,7 @@ public class EkstraPensjaActivity extends Activity {
     private RadioGroup ekstraPensjaGroup;
     private EditText dataStart;
     private EditText dataKoniec;
+    private Type type = null;
     private EditText liczba1;
     private EditText liczba2;
     private EditText liczba3;
@@ -30,10 +38,17 @@ public class EkstraPensjaActivity extends Activity {
     private EditText liczba8;
     private int ileLiczb = 1;
     private int groupCheckedId = R.id.ekstraPensja1Radio;
+    private AlertDialog.Builder builder;
+    private final DBHelper dbHelper  = new DBHelper(this);
+    private ObrabianieWynikow obrabianieWynikow;
+    private boolean czyWygrana = false;
+    private Vibrator vibrator;
+    private long[] pattern = {0, 500, 500, 500, 500, 500};
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ekstra_pensja);
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         ekstraPensjaGroup =(RadioGroup)findViewById(R.id.ekstraPensjaGrupa);
         System.out.println(ekstraPensjaGroup);
         ekstraPensjaGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -84,16 +99,100 @@ public class EkstraPensjaActivity extends Activity {
         liczba8.setVisibility(pole3);
     }
 
-    public void saveEkstraPensjaNumbers(View view){
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Type type = null;
-        try {
-            type = new Type(TypGry.EKSTRA_PENSJA, simpleDateFormat.parse(dataStart.getText().toString()), simpleDateFormat.parse(dataKoniec.getText().toString()), Type.typowaneNumeryZListy(typowaneNumery()), ileLiczb);
-        } catch (ParseException e) {
-            e.printStackTrace();
+    public void saveEkstraPensjaNumbers(View view) throws ParseException {
+        builder = new AlertDialog.Builder(this);
+        if(sprawdzPola()) {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                type = new Type(TypGry.EKSTRA_PENSJA, simpleDateFormat.parse(dataStart.getText().toString()), simpleDateFormat.parse(dataKoniec.getText().toString()), Type.typowaneNumeryZListy(typowaneNumery()), ileLiczb);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            final int id = dbHelper.wstawType(type);
+            Calendar calendar1 = Calendar.getInstance();
+            calendar1.setTime(new Date());
+            Calendar calendar2 = Calendar.getInstance();
+            calendar2.setTime(DateFormat.getDateInstance().parse(dataStart.getText().toString()));
+            if (calendar1.equals(calendar2)) {
+                if (Calendar.HOUR_OF_DAY > 22) {
+                    obrabianieWynikow = new ObrabianieWynikow(TypGry.EKSTRA_PENSJA);
+                    obrabianieWynikow.execute();
+                    if (obrabianieWynikow.czyWygrana(type)) {
+                        czyWygrana = true;
+                        builder.setMessage(getResources().getString(R.string.zwyciestwo));
+                        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dbHelper.wstawWinner(new Wygrane(id));
+                            }
+                        });
+                        vibrator.vibrate(pattern, -1);
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
+                    }
+                }
+            }
+            if (calendar1.after(calendar2)) {
+                obrabianieWynikow = new ObrabianieWynikow(TypGry.EKSTRA_PENSJA);
+                ArrayList<Results> resultsArrayList = dbHelper.pobierzWyniki(simpleDateFormat.parse(dataStart.getText().toString()), simpleDateFormat.parse(dataKoniec.getText().toString()), TypGry.EKSTRA_PENSJA);
+                boolean czyWygranaInner = false;
+                for (int i = 0; i < resultsArrayList.size(); i++) {
+                    obrabianieWynikow.setWyniki(resultsArrayList.get(i).getWylosowaneLiczbyLista());
+                    if (obrabianieWynikow.czyWygrana(type)) czyWygranaInner = true;
+                }
+                if (czyWygranaInner) {
+                    czyWygrana = true;
+                    builder.setMessage(getResources().getString(R.string.zwyciestwo));
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dbHelper.wstawWinner(new Wygrane(id));
+                        }
+                    });
+                    vibrator.vibrate(pattern, -1);
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                }
+            }
+            builder.setMessage(getResources().getString(R.string.wiadomosc_dodano_kupon) + id);
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
         }
-        DBHelper dbHelper = new DBHelper(this);
-        dbHelper.wstawType(type);
+        else{
+            builder.setMessage(getResources().getString(R.string.ostrzezenie_nie_wypelniono_pol));
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        }
+    }
+
+    private boolean sprawdzPola() {
+        boolean czyGotowy = true;
+        if(isEmpty(dataStart))czyGotowy = false;
+        if(isEmpty(dataKoniec))czyGotowy = false;
+        if(isEmpty(liczba1))czyGotowy = false;
+        if(isEmpty(liczba2))czyGotowy = false;
+        if(isEmpty(liczba3))czyGotowy = false;
+        if(isEmpty(liczba4))czyGotowy = false;
+        if(isEmpty(liczba5))czyGotowy = false;
+        if(isEmpty(liczba6))czyGotowy = false;
+        if(isEmpty(liczba7))czyGotowy = false;
+        if(isEmpty(liczba8))czyGotowy = false;
+        return czyGotowy;
+    }
+
+    private boolean isEmpty(EditText etText) {
+        return etText.getText().toString().trim().length() == 0;
     }
 
     private void setBoundries(){
@@ -136,7 +235,7 @@ public class EkstraPensjaActivity extends Activity {
         return numery;
     }
 
-    public void finisActivity(View view){
+    public void ekstrePensjaFinisActivity(View view){
         finish();
     }
 }

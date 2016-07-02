@@ -1,5 +1,28 @@
 <resources>
     <string name="app_name">AsystentGierLosowych</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_ekstra_pensja">EkstraPensjaActivity</string>
+    <string name="action_settings">Ustawienia</string>
+    <string name="data_poczatek_i_koniec">Wybierz datę początkową i końcową</string>
+    <string name="popowiedz_do_daty">rrrr-mm-dd</string>
+    <string name="wybor_ilosci_liczb">Ile liczb zaznaczyles</string>
+    <string name="wybor_liczb">Podaj swoje liczby</string>
+    <string name="przycisk_anuluj">Anuluj</string>
+    <string name="przycisk_ok">Zapisz</string>
+    <string name="przycisk_nowy_kupon">Nowy kupon</string>
+    <string name="przycisk_najnowsze_wyniki">Ostatnie wyniki</string>
+    <string name="ekstra_pensja_dodatkowa_liczba">Podaj dodatkowa liczbe</string>
+    <string name="wyniki">Wyniki</string>
+    <string name="lotto">Lotto</string>
+    <string name="mini_lotto">MiniLotto</string>
+    <string name="multi_multi">MultiMulti</string>
+    <string name="ekstra_pensja">Ekstra Pensja</string>
+    <string name="wybierz_gre">Wybierz grę</string>
+    <string name="zwyciestwo">Wygrales</string>
+    <string name="wiadomosc_dodano_kupon">Id twojego kuponu to \u0020</string>
+    <string name="ostrzezenie_nie_wypelniono_pol">Nie wypełniłeś wszystkich wymaganych pól</string>
+    <string name="usuniecie_kuponu">Usunieto przestarzałe kupony</string>
+    <string name="kupon_o_id">Kupon o id = \u0020</string>
+    <string name="jest_zwycieski">\u0020 jest zwycieski w grze \u0020</string>
+    <string name="pobrano_dane">Nowe wyniki zostały pobrane</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

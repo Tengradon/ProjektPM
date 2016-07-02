@@ -18,6 +18,7 @@ import java.util.Date;
  */
 public class ObrabianieWynikow extends AsyncTask<String, Void, String> {
     private ArrayList<Integer> wyniki;
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private boolean isReady = false;
     private TypGry typGry;
     private URL url;
@@ -29,11 +30,14 @@ public class ObrabianieWynikow extends AsyncTask<String, Void, String> {
         dataLosowania = new Date();
     }
 
+
     public ArrayList<Integer> getWyniki() {
-        while(!isReady)try { Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace(); }
+        while(!isReady)try { Thread.sleep(50);} catch (InterruptedException e) {e.printStackTrace(); }
         System.out.println(typGry);
         return wyniki;
     }
+
+
 
     public int sprawdzTypy(ArrayList<Integer> typowaneWyniki){
         int iloscTrafien = 0;
@@ -90,10 +94,10 @@ public class ObrabianieWynikow extends AsyncTask<String, Void, String> {
                     url = new URL("http://app.lotto.pl/wyniki/?type=ep");
                     break;
                 case MULTI_MULTI14:
-                    url = new URL("http://app.lotto.pl/wyniki/?type=mm14plus");
+                    url = new URL("http://app.lotto.pl/wyniki/?type=mm14");
                     break;
                 case MULTI_MULTI22:
-                    url = new URL("http://app.lotto.pl/wyniki/?type=mm22plus");
+                    url = new URL("http://app.lotto.pl/wyniki/?type=mm22");
                     break;
                 case MINI_LOTTO:
                     url = new URL("http://app.lotto.pl/wyniki/?type=el");
@@ -107,7 +111,7 @@ public class ObrabianieWynikow extends AsyncTask<String, Void, String> {
             in = new BufferedReader(new InputStreamReader(url.openStream()));
             String inputLine;
             inputLine = in.readLine();
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
             dataLosowania = simpleDateFormat.parse(inputLine);
             while ((inputLine = in.readLine()) != null)
                 wyniki.add(Integer.parseInt(inputLine));
@@ -118,12 +122,81 @@ public class ObrabianieWynikow extends AsyncTask<String, Void, String> {
         }catch (ParseException e) {
             e.printStackTrace();
         }
-<<<<<<< HEAD
         System.out.println(typGry);
         System.out.println(wyniki.get(1));
-=======
->>>>>>> origin/master
         isReady = true;
         return null;
+    }
+
+    public boolean czyWygrana(Type type){
+        boolean czyWygrana = false;
+        switch(type.getTypGryOriginal()){
+            case LOTTO:
+                czyWygrana = czyWygrana(type, 2);
+                break;
+            case EKSTRA_PENSJA:
+                czyWygrana = czyWygrana(type, 1);
+                break;
+            case MINI_LOTTO:
+                czyWygrana = czyWygrana(type, 2);
+                break;
+            case MULTI_MULTI14:
+                czyWygrana = czyWygranaMultiMulti(type);
+                break;
+            case MULTI_MULTI22:
+                czyWygrana = czyWygranaMultiMulti(type);
+                break;
+        }
+        return czyWygrana;
+    }
+
+    private boolean czyWygranaMultiMulti(Type type){
+        boolean czyWygrana;
+        switch(type.getIloscSkreslonychLiczb()){
+            case 1:
+                czyWygrana = czyWygrana(type, 0);
+                break;
+            case 2:
+                czyWygrana = czyWygrana(type, 1);
+                break;
+            case 3:
+                czyWygrana = czyWygrana(type, 1);
+                break;
+            case 4:
+                czyWygrana = czyWygrana(type, 1);
+                break;
+            case 5:
+                czyWygrana = czyWygrana(type, 2);
+                break;
+            case 6:
+                czyWygrana = czyWygrana(type, 2);
+                break;
+            case 7:
+                czyWygrana = czyWygrana(type, 2);
+                break;
+            default:
+                czyWygrana = czyWygrana(type, 3);
+                break;
+        }
+
+        return czyWygrana;
+    }
+
+    public boolean czyWygrana(Type type, int ilosc){
+        boolean czyWygrana = false;
+        int trafienia = 0;
+        trafienia = sprawdzTypy(type.getTypowaneNumeryLista());
+        if(trafienia > ilosc){
+            czyWygrana = true;
+        }
+        return czyWygrana;
+    }
+
+    public Date getDataLosowania() {
+        return dataLosowania;
+    }
+
+    public void setWyniki(ArrayList<Integer> wyniki) {
+        this.wyniki = wyniki;
     }
 }

@@ -68,7 +68,7 @@ public class DBHelper extends SQLiteOpenHelper{
         onCreate(db);
     }
 
-    public boolean wstawType(Type type){
+    public int wstawType(Type type){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(TYPE_COLUMN_GAME_TYPE, type.getTypGry());
@@ -76,26 +76,24 @@ public class DBHelper extends SQLiteOpenHelper{
         contentValues.put(TYPE_COLUMN_LAST_DATE, type.getDataOstatniegoLosowania());
         contentValues.put(TYPE_COLUMN_NUMBERS, type.getTypowaneNumery());
         contentValues.put(TYPE_COLUMN_QUANTITY, type.getIloscSkreslonychLiczb());
-        db.insert(TYPE_TABLE_NAME, null, contentValues);
-        return true;
+        return (int) db.insert(TYPE_TABLE_NAME, null, contentValues);
+
     }
 
-    public boolean wstawResult(Results results){
+    public int wstawResult(Results results){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(RESULTS_COLUMN_GAME_TYPE, results.getTypGry());
         contentValues.put(RESULTS_COLUMN_DATE, results.getDataLosowania());
         contentValues.put(RESULTS_COLUMN_NUMBERS, results.getWylosowaneLiczby());
-        db.insert(TYPE_TABLE_NAME, null, contentValues);
-        return true;
+        return (int) db.insert(RESULTS_TABLE_NAME, null, contentValues);
     }
 
-    public boolean wstawWinner(Wygrane wygrane){
+    public int wstawWinner(Wygrane wygrane){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(WINNER_COLUMN_ID_TYPE, wygrane.getIdKuponu());
-        db.insert(TYPE_TABLE_NAME, null, contentValues);
-        return true;
+        return (int) db.insert(WINNER_TABLE_NAME, null, contentValues);
     }
 
     public ArrayList<Type> pobierzTypy(){
@@ -123,6 +121,41 @@ public class DBHelper extends SQLiteOpenHelper{
         return typeArrayList;
     }
 
+    public ArrayList<Type> pobierzTypy(Date date){
+        ArrayList<Type>typeArrayList = pobierzTypy();
+        for(int i = 0; i < typeArrayList.size(); i++){
+            try {
+                if((simpleDateFormat.parse(typeArrayList.get(i).getDataOstatniegoLosowania()).after(date))){
+                    typeArrayList.remove(i);
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return typeArrayList;
+    }
+
+    public Type pobierzTypy(int id){
+        String query = "SELECT * FROM " + TYPE_TABLE_NAME + " where " + TYPE_COLUMN_ID + " = " + id;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        Type type = null;
+        if(cursor.moveToFirst()){
+            try {
+                type = new Type();
+                type.setId(Integer.parseInt(cursor.getString(0)));
+                type.setTypGry(Integer.parseInt(cursor.getString(1)));
+                type.setDataPierwszegoLosowania(simpleDateFormat.parse(cursor.getString(2)));
+                type.setDataOstatniegoLosowania(simpleDateFormat.parse(cursor.getString(3)));
+                type.setTypowaneNumery(cursor.getString(4));
+                type.setIloscSkreslonychLiczb(Integer.parseInt(cursor.getString(5)));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return type;
+    }
+
     public ArrayList<Results> pobierzWyniki(){
         ArrayList<Results>resultsArrayList = new ArrayList<>();
         String query = "SELECT * FROM " + RESULTS_TABLE_NAME;
@@ -137,6 +170,7 @@ public class DBHelper extends SQLiteOpenHelper{
                     results.setTypGry(Integer.parseInt(cursor.getString(1)));
                     results.setDataLosowania(simpleDateFormat.parse(cursor.getString(2)));
                     results.setWylosowaneLiczby(cursor.getString(3));
+                    resultsArrayList.add(results);
                 }catch(ParseException e){
                     e.printStackTrace();
                 }
@@ -145,14 +179,15 @@ public class DBHelper extends SQLiteOpenHelper{
         return resultsArrayList;
     }
 
-    public ArrayList<Results> pobierzWyniki(Date poczatek, Date koniec){
+    public ArrayList<Results> pobierzWyniki(Date poczatek, Date koniec, TypGry typGry){
         ArrayList<Results>resultsArrayList = new ArrayList<>();
         resultsArrayList = pobierzWyniki();
         for(int i = 0; i < resultsArrayList.size(); i++){
             try {
-                if((simpleDateFormat.parse(resultsArrayList.get(i).getDataLosowania()).before(poczatek)) && (simpleDateFormat.parse(resultsArrayList.get(i).getDataLosowania()).after(koniec))){
+                if(((simpleDateFormat.parse(resultsArrayList.get(i).getDataLosowania()).before(poczatek)) && (simpleDateFormat.parse(resultsArrayList.get(i).getDataLosowania()).after(koniec))) || resultsArrayList.get(i).getTypGry() != typGry.getValue()){
                     resultsArrayList.remove(i);
                 }
+
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -171,6 +206,7 @@ public class DBHelper extends SQLiteOpenHelper{
                 wygrane = new Wygrane();
                 wygrane.setId(Integer.parseInt(cursor.getString(0)));
                 wygrane.setIdKuponu(Integer.parseInt(cursor.getString(1)));
+                wygraneArrayList.add(wygrane);
             }while(cursor.moveToNext());
         }
         return wygraneArrayList;
@@ -199,5 +235,27 @@ public class DBHelper extends SQLiteOpenHelper{
             integerArrayList.add(Integer.parseInt(strings[i]));
         }
         return integerArrayList;
+    }
+
+    public boolean czyPobrano(TypGry typGry, Date date){
+        boolean czyIstnieje = false;
+        String query = "SELECT " + RESULTS_COLUMN_ID + " from " + RESULTS_TABLE_NAME + " where " + RESULTS_COLUMN_GAME_TYPE + " = " + typGry.getValue() + " and " + RESULTS_COLUMN_DATE + " = " + simpleDateFormat.format(date);
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        int count = cursor.getCount();
+        if(count > 0) czyIstnieje = true;
+        return czyIstnieje;
+    }
+
+    public void deleteAll(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String delete = "DELETE from " + WINNER_TABLE_NAME;
+        db.execSQL(delete);
+    }
+
+    public void deleteTypy(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String delete = "DELETE from " + TYPE_TABLE_NAME + " where " + TYPE_COLUMN_ID + " = " + id;
+        db.execSQL(delete);
     }
 }

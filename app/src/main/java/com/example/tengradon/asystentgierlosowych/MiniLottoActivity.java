@@ -40,7 +40,7 @@ public class MiniLottoActivity extends Activity {
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.lotto_activity);
+        setContentView(R.layout.mini_lotto_activity);
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         dataStart = (EditText)findViewById(R.id.miniLottoDataPierwszegoEditText);
         dataKoniec = (EditText)findViewById(R.id.miniLottoDataOstaniegoEditText);
@@ -171,3 +171,4 @@ public class MiniLottoActivity extends Activity {
         finish();
     }
 }
+               

@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
 /**
  * Created by Tengradon on 2016-06-29.
  */
@@ -292,3 +293,4 @@ public class MultiMultiActivity extends Activity {
         finish();
     }
 }
+
