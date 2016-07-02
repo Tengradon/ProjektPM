@@ -95,7 +95,7 @@ public class MultiMultiActivity extends Activity {
     }
 
 
-    public void saveMiniLottoNumbers(View view) throws ParseException {
+    public void saveMultiMultiNumbers(View view) throws ParseException {
         builder = new AlertDialog.Builder(this);
         if(sprawdzPola()) {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
