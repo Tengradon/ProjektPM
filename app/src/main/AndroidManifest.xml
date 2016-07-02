@@ -3,6 +3,7 @@
     package="com.example.tengradon.asystentgierlosowych">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
         android:allowBackup="true"
@@ -21,11 +22,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".LottoActivity" />
+        <activity android:name=".MiniLottoActivity" />
+        <activity android:name=".EkstraPensjaActivity" />
         <activity android:name=".MultiMultiActivity" />
-        <activity
-            android:name=".EkstraPensjaActivity"
-            android:label="@string/title_activity_ekstra_pensja"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <service android:name=".UsuwanieKuponowService" android:exported="false" />
+        <service android:name=".SprawdzWygraneService" android:exported="false" />
     </application>
 
 </manifest>

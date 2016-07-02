@@ -1,4 +1,5 @@
 package com.example.tengradon.asystentgierlosowych;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -48,14 +49,16 @@ public class Type {
     public TypGry getTypGryOriginal(){return typGry;}
 
     public String getDataPierwszegoLosowania() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String data;
-        data = String.valueOf(dataPierwszegoLosowania);
+        data = simpleDateFormat.format(dataPierwszegoLosowania);
         return data;
     }
 
     public String getDataOstatniegoLosowania() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String data;
-        data = String.valueOf(dataOstatniegoLosowania);
+        data = simpleDateFormat.format(dataOstatniegoLosowania);
         return data;
     }
 
@@ -115,8 +118,20 @@ public class Type {
     public static String typowaneNumeryZListy(ArrayList<Integer> typowaneNumery){
         String mojeTypy = "";
         for(int i = 0; i < typowaneNumery.size(); i++){
-            mojeTypy += typowaneNumery + "|";
+            mojeTypy += typowaneNumery.get(i) + "|";
         }
         return mojeTypy;
+    }
+
+    @Override
+    public String toString() {
+        return "Type{" +
+                "id=" + id +
+                "typGry=" + typGry +
+                ", dataPierwszegoLosowania=" + dataPierwszegoLosowania +
+                ", dataOstatniegoLosowania=" + dataOstatniegoLosowania +
+                ", typowaneNumery='" + typowaneNumery + '\'' +
+                ", iloscSkreslonychLiczb=" + iloscSkreslonychLiczb +
+                '}';
     }
 }

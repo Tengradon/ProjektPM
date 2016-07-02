@@ -4,10 +4,7 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.os.Handler;
 import android.widget.Toast;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 /**
  * Created by Rafal on 2016-07-01.

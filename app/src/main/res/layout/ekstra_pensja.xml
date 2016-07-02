@@ -13,7 +13,7 @@
         android:layout_gravity="fill_horizontal"
         android:layout_weight="1"
         android:id="@+id/ekstraPensjaWybierzDateTetView"
-        android:text="Wybierz datę początkową i końcową"
+        android:text="@string/data_poczatek_i_koniec"
         android:layout_columnSpan="22"
         android:layout_row="0"
         android:layout_column="0"/>
@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:hint="rrrr-mm-dd"
+        android:hint="@string/popowiedz_do_daty"
         android:inputType="date"
         android:layout_columnSpan="10"
         android:id="@+id/ekstraPensjaDataPierwszegoEditText"
@@ -33,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:hint="rrrr-mm-dd"
+        android:hint="@string/popowiedz_do_daty"
         android:inputType="date"
         android:layout_columnSpan="10"
         android:id="@+id/ekstraPensjaDataOstaniegoEditText"
@@ -45,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:id="@+id/ekstraPensjaPodajLiczbyTextView"
-        android:text="Podaj swoje liczby"
+        android:text="@string/wybor_liczb"
         android:layout_columnSpan="22"
         android:layout_row="3"
         android:layout_column="0"/>
@@ -97,7 +97,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:id="@+id/ekstraPensjaIloscLiczbTextView"
-        android:text="Ile liczb zaznaczyles"
+        android:text="@string/wybor_ilosci_liczb"
         android:layout_columnSpan="22"
         android:layout_row="7"
         android:layout_column="0"/>
@@ -140,7 +140,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:id="@+id/ekstraPensjaPodajOstatniaTextView"
-        android:text="Podaj dodatkowa liczbe"
+        android:text="@string/ekstra_pensja_dodatkowa_liczba"
         android:layout_columnSpan="22"
         android:layout_row="11"
         android:layout_column="0"/>
@@ -175,8 +175,9 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cancel"
+        android:text="@string/przycisk_anuluj"
         android:id="@+id/ekstraPensjaCancelButton"
+        android:onClick="ekstrePensjaFinisActivity"
         android:layout_weight="1"
         android:layout_columnSpan="10"
         android:layout_row="18"
@@ -185,7 +186,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Save"
+        android:text="@string/przycisk_ok"
         android:layout_columnSpan="8"
         android:id="@+id/ekstraPensjaSaveButton"
         android:onClick="saveEkstraPensjaNumbers"

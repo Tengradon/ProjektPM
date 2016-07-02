@@ -9,12 +9,12 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:id="@+id/editText"
-        android:text="wybierz grę"/>
+        android:text="@string/wybierz_gre"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Lotto"
+        android:text="@string/lotto"
         android:id="@+id/lotto"
         android:layout_weight="1"
         android:layout_marginTop="32dp"
@@ -24,7 +24,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Multi-Multi"
+        android:text="@string/multi_multi"
         android:id="@+id/multi"
         android:layout_weight="1"
         android:onClick="pokazEkranMultiMulti"
@@ -33,7 +33,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ekstra pensja"
+        android:text="@string/ekstra_pensja"
         android:id="@+id/esktra"
         android:layout_weight="1"
         android:onClick="pokazEkranEkstraPensja"
@@ -42,7 +42,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mini lotto"
+        android:text="@string/mini_lotto"
         android:id="@+id/mini"
         android:onClick="pokazEkranMiniLotto"
         android:layout_weight="1"

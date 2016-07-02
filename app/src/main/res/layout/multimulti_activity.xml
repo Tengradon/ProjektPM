@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:id="@+id/multiMultiWybierzDateTetView"
-        android:text="Wybierz datę początkową i końcową"
+        android:text="@string/data_poczatek_i_koniec"
         android:layout_columnSpan="20"
         android:layout_row="0"
         android:layout_column="0"/>
@@ -21,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:hint="Start"
+        android:hint="@string/popowiedz_do_daty"
         android:inputType="date"
         android:layout_columnSpan="8"
         android:id="@+id/multiMultiDataPierwszegoEditText"
@@ -32,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:hint="Koniec"
+        android:hint="@string/popowiedz_do_daty"
         android:inputType="date"
         android:layout_columnSpan="8"
         android:id="@+id/multiMultiDataOstaniegoEditText"
@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:id="@+id/multiMultiIloscLiczbTextView"
-        android:text="Ile liczb zaznaczyles"
+        android:text="@string/wybor_ilosci_liczb"
         android:layout_columnSpan="20"
         android:layout_row="4"
         android:layout_column="0"/>
@@ -130,7 +130,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:id="@+id/multiMultiPodajLiczbyTextView"
-        android:text="Podaj swoje liczby"
+        android:text="@string/wybor_liczb"
         android:layout_columnSpan="20"
         android:layout_row="9"
         android:layout_column="0"/>
@@ -229,9 +229,9 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cancel"
-        android:onClick="finisActivity"
+        android:text="@string/przycisk_anuluj"
         android:id="@+id/multiMultiCancelButton"
+        android:onClick="multiMultiFinisActivity"
         android:layout_columnSpan="8"
         android:layout_row="18"
         android:layout_column="1" />
@@ -239,7 +239,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Save"
+        android:text="@string/przycisk_ok"
         android:layout_columnSpan="8"
         android:id="@+id/multiMultiSaveButton"
         android:onClick="saveLottoNumbers"

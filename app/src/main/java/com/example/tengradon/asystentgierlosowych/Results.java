@@ -61,8 +61,9 @@ public class Results {
     }
 
     public String getDataLosowania() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String data;
-        data = String.valueOf(dataLosowania);
+        data = simpleDateFormat.format(dataLosowania);
         return data;
     }
 
@@ -90,8 +91,9 @@ public class Results {
     public static String wylosowaneLiczbyZListy(ArrayList<Integer> typowaneNumery){
         String mojeTypy = "";
         for(int i = 0; i < typowaneNumery.size(); i++){
-            mojeTypy += typowaneNumery + "|";
+            mojeTypy += typowaneNumery.get(i).toString() + "|";
         }
+
         return mojeTypy;
     }
 }
