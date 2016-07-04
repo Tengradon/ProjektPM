@@ -95,7 +95,7 @@ public class MultiMultiActivity extends Activity {
     }
 
 
-    public void saveMultiMultiNumbers(View view) throws ParseException {
+    public void saveMiniLottoNumbers(View view) throws ParseException {
         builder = new AlertDialog.Builder(this);
         if(sprawdzPola()) {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -110,7 +110,8 @@ public class MultiMultiActivity extends Activity {
             Calendar calendar1 = Calendar.getInstance();
             calendar1.setTime(new Date());
             Calendar calendar2 = Calendar.getInstance();
-            calendar2.setTime(DateFormat.getDateInstance().parse(dataStart.getText().toString()));
+            Date data = simpleDateFormat.parse(dataStart.getText().toString());
+            calendar2.setTime(data);
             if (calendar1.equals(calendar2)) {
                 if (Calendar.HOUR_OF_DAY > 14) {
                     obrabianieWynikow = new ObrabianieWynikow(TypGry.MULTI_MULTI14);
@@ -121,7 +122,7 @@ public class MultiMultiActivity extends Activity {
                         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                dbHelper.wstawWinner(new Wygrane(id));
+                                dbHelper.wstawWinner(new Wygrane(id, obrabianieWynikow.getDataLosowania()));
                             }
                         });
                         vibrator.vibrate(pattern, -1);
@@ -144,7 +145,7 @@ public class MultiMultiActivity extends Activity {
                     builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            dbHelper.wstawWinner(new Wygrane(id));
+                            dbHelper.wstawWinner(new Wygrane(id, obrabianieWynikow.getDataLosowania()));
                         }
                     });
                     vibrator.vibrate(pattern, -1);
@@ -179,15 +180,15 @@ public class MultiMultiActivity extends Activity {
         if(isEmpty(dataStart))czyGotowy = false;
         if(isEmpty(dataKoniec))czyGotowy = false;
         if(isEmpty(liczba1))czyGotowy = false;
-        if(isEmpty(liczba2))czyGotowy = false;
-        if(isEmpty(liczba3))czyGotowy = false;
-        if(isEmpty(liczba4))czyGotowy = false;
-        if(isEmpty(liczba5))czyGotowy = false;
-        if(isEmpty(liczba6))czyGotowy = false;
-        if(isEmpty(liczba7))czyGotowy = false;
-        if(isEmpty(liczba8))czyGotowy = false;
-        if(isEmpty(liczba9))czyGotowy = false;
-        if(isEmpty(liczba10))czyGotowy = false;
+        if(ileLiczb>1)if(isEmpty(liczba2))czyGotowy = false;
+        if(ileLiczb>2)if(isEmpty(liczba3))czyGotowy = false;
+        if(ileLiczb>3)if(isEmpty(liczba4))czyGotowy = false;
+        if(ileLiczb>4)if(isEmpty(liczba5))czyGotowy = false;
+        if(ileLiczb>5)if(isEmpty(liczba6))czyGotowy = false;
+        if(ileLiczb>6)if(isEmpty(liczba7))czyGotowy = false;
+        if(ileLiczb>7)if(isEmpty(liczba8))czyGotowy = false;
+        if(ileLiczb>8)if(isEmpty(liczba9))czyGotowy = false;
+        if(ileLiczb>9)if(isEmpty(liczba10))czyGotowy = false;
         return czyGotowy;
     }
 
@@ -293,4 +294,3 @@ public class MultiMultiActivity extends Activity {
         finish();
     }
 }
-

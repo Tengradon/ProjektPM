@@ -90,7 +90,8 @@ public class LottoActivity extends Activity {
             Calendar calendar1 = Calendar.getInstance();
             calendar1.setTime(new Date());
             Calendar calendar2 = Calendar.getInstance();
-            calendar2.setTime(DateFormat.getDateInstance().parse(dataStart.getText().toString()));
+            Date data = simpleDateFormat.parse(dataStart.getText().toString());
+            calendar2.setTime(data);
             if (calendar1.equals(calendar2)) {
                 if (Calendar.HOUR_OF_DAY > 22) {
                     obrabianieWynikow = new ObrabianieWynikow(TypGry.LOTTO);
@@ -101,7 +102,7 @@ public class LottoActivity extends Activity {
                         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                dbHelper.wstawWinner(new Wygrane(id));
+                                dbHelper.wstawWinner(new Wygrane(id, obrabianieWynikow.getDataLosowania()));
                             }
                         });
                         vibrator.vibrate(pattern, -1);
@@ -125,7 +126,7 @@ public class LottoActivity extends Activity {
                     builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            dbHelper.wstawWinner(new Wygrane(id));
+                            dbHelper.wstawWinner(new Wygrane(id, obrabianieWynikow.getDataLosowania()));
                         }
                     });
                     AlertDialog alertDialog = builder.create();
@@ -166,12 +167,12 @@ public class LottoActivity extends Activity {
         if(isEmpty(liczba4))czyGotowy = false;
         if(isEmpty(liczba5))czyGotowy = false;
         if(isEmpty(liczba6))czyGotowy = false;
-        if(isEmpty(liczba7))czyGotowy = false;
-        if(isEmpty(liczba8))czyGotowy = false;
-        if(isEmpty(liczba9))czyGotowy = false;
-        if(isEmpty(liczba10))czyGotowy = false;
-        if(isEmpty(liczba11))czyGotowy = false;
-        if(isEmpty(liczba12))czyGotowy = false;
+        if(ileLiczb>6)if(isEmpty(liczba7))czyGotowy = false;
+        if(ileLiczb>7)if(isEmpty(liczba8))czyGotowy = false;
+        if(ileLiczb>8)if(isEmpty(liczba9))czyGotowy = false;
+        if(ileLiczb>9)if(isEmpty(liczba10))czyGotowy = false;
+        if(ileLiczb>10)if(isEmpty(liczba11))czyGotowy = false;
+        if(ileLiczb>11)if(isEmpty(liczba12))czyGotowy = false;
         return czyGotowy;
     }
 

@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 
 /**
@@ -25,7 +26,11 @@ public class WygraneFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         Context context = container.getContext();
         dbHelper = new DBHelper(context);
-        wygraneArrayList = dbHelper.pobierzWygrane();
+        try {
+            wygraneArrayList = dbHelper.pobierzWygrane();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         ScrollView scrollView = new ScrollView(context);
         LinearLayout linearLayout = new LinearLayout(context);
         linearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -41,7 +46,7 @@ public class WygraneFragment extends Fragment {
     private String stworzTekst(Wygrane wygrane){
         String tekst = "";
         type = dbHelper.pobierzTypy(wygrane.getIdKuponu());
-        tekst = getResources().getString(R.string.kupon_o_id) + wygrane.getIdKuponu() + getResources().getString(R.string.jest_zwycieski) + type.getTypGryOriginal();
+        tekst = getResources().getString(R.string.kupon_o_id) + wygrane.getIdKuponu() + getResources().getString(R.string.jest_zwycieski) + type.getTypGryOriginal() + getResources().getString(R.string.z_dnia) + wygrane.getData();
         return tekst;
     }
 }

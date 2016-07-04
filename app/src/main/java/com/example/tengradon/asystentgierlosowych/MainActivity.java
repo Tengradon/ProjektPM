@@ -24,7 +24,17 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity {
 
     private SharedPreferences sharedPreferences;
-    private static final String PREF_DATA = "dataOstatniegoPoboru";
+    public static final String PREF_DATA = "dataOstatniegoPoboru";
+    public static final String PREF_LOTTO = "wynikiLotto";
+    public static final String PREF_MINI = "wynikiMini";
+    public static final String PREF_MULTI14 = "wynikiMulti14";
+    public static final String PREF_EKSTRA = "wynikiEkstra";
+    public static final String PREF_MULTI22= "wynikiMulti22";
+    public static final String PREF_LOTTO_DATA = "wynikiLottoData";
+    public static final String PREF_MINI_DATA = "wynikiMiniData";
+    public static final String PREF_MULTI14_DATA = "wynikiMulti14Data";
+    public static final String PREF_EKSTRA_DATA = "wynikiEkstraData";
+    public static final String PREF_MULTI22_DATA= "wynikiMulti22Data";
     private DBHelper dbHelper;
     private Calendar calendar1 = Calendar.getInstance();
     private Calendar calendar2 = Calendar.getInstance();
@@ -44,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         calendar2.set(Calendar.MINUTE, 0);
         calendar2.set(Calendar.HOUR_OF_DAY, 0);
         dbHelper = new DBHelper(this);
-        if(calendar2.after(calendar1))aktualizujBazeLosowan();
+        aktualizujBazeLosowan();
         Intent intent = new Intent(this, UsuwanieKuponowService.class);
         startService(intent);
         Intent intent2 = new Intent(this, SprawdzWygraneService.class);
@@ -131,33 +141,37 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void aktualizujBazeLosowan(){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         ObrabianieWynikow lotto = new ObrabianieWynikow(TypGry.LOTTO);
         lotto.execute();
-        if(!dbHelper.czyPobrano(TypGry.LOTTO, lotto.getDataLosowania())){
-            dbHelper.wstawResult(new Results(TypGry.LOTTO, lotto.getDataLosowania(), Type.typowaneNumeryZListy(lotto.getWyniki())));
-        }
+        Results lottoResult = new Results(TypGry.LOTTO, lotto.getDataLosowania(), Type.typowaneNumeryZListy(lotto.getWyniki()));
+        if(!dbHelper.czyPobrano(TypGry.LOTTO, lotto.getDataLosowania()))dbHelper.wstawResult(lottoResult);
+        editor.putString(PREF_DATA, DateFormat.getDateInstance().format(calendar2.getTime()));
+        editor.putString(PREF_LOTTO, Type.typowaneNumeryZListy(lotto.getWyniki()));
+        editor.putString(PREF_LOTTO_DATA, DateFormat.getDateInstance().format(lotto.getDataLosowania()));
         ObrabianieWynikow multiMulti14 = new ObrabianieWynikow(TypGry.MULTI_MULTI14);
         multiMulti14.execute();
-        if(!dbHelper.czyPobrano(TypGry.MULTI_MULTI14, multiMulti14.getDataLosowania())){
-            dbHelper.wstawResult(new Results(TypGry.MULTI_MULTI14, multiMulti14.getDataLosowania(), Type.typowaneNumeryZListy(multiMulti14.getWyniki())));
-        }
+        Results multiResult = new Results(TypGry.MULTI_MULTI14, multiMulti14.getDataLosowania(), Type.typowaneNumeryZListy(multiMulti14.getWyniki()));
+        if(!dbHelper.czyPobrano(TypGry.MULTI_MULTI14, multiMulti14.getDataLosowania()))dbHelper.wstawResult(multiResult);
+        editor.putString(PREF_MULTI14, Type.typowaneNumeryZListy(multiMulti14.getWyniki()));
+        editor.putString(PREF_MULTI14_DATA, DateFormat.getDateInstance().format(multiMulti14.getDataLosowania()));
         ObrabianieWynikow multiMulti22 = new ObrabianieWynikow(TypGry.MULTI_MULTI22);
         multiMulti22.execute();
-        if(!dbHelper.czyPobrano(TypGry.MULTI_MULTI22, multiMulti22.getDataLosowania())){
-            dbHelper.wstawResult(new Results(TypGry.MULTI_MULTI22, multiMulti22.getDataLosowania(), Type.typowaneNumeryZListy(multiMulti22.getWyniki())));
-        }
+        Results multi2Result = new Results(TypGry.MULTI_MULTI22, multiMulti22.getDataLosowania(), Type.typowaneNumeryZListy(multiMulti22.getWyniki()));
+        if(!dbHelper.czyPobrano(TypGry.MULTI_MULTI22, multiMulti22.getDataLosowania()))dbHelper.wstawResult(multi2Result);
+        editor.putString(PREF_MULTI22, Type.typowaneNumeryZListy(multiMulti22.getWyniki()));
         ObrabianieWynikow ekstraPensja = new ObrabianieWynikow(TypGry.EKSTRA_PENSJA);
         ekstraPensja.execute();
-        if(!dbHelper.czyPobrano(TypGry.EKSTRA_PENSJA, lotto.getDataLosowania())){
-            dbHelper.wstawResult(new Results(TypGry.EKSTRA_PENSJA, ekstraPensja.getDataLosowania(), Type.typowaneNumeryZListy(ekstraPensja.getWyniki())));
-        }
+        Results ekstraResult = new Results(TypGry.EKSTRA_PENSJA, ekstraPensja.getDataLosowania(), Type.typowaneNumeryZListy(ekstraPensja.getWyniki()));
+        if(!dbHelper.czyPobrano(TypGry.EKSTRA_PENSJA, lotto.getDataLosowania()))dbHelper.wstawResult(ekstraResult);
+        editor.putString(PREF_EKSTRA, Type.typowaneNumeryZListy(ekstraPensja.getWyniki()));
+        editor.putString(PREF_EKSTRA_DATA, DateFormat.getDateInstance().format(ekstraPensja.getDataLosowania()));
         ObrabianieWynikow miniLotto = new ObrabianieWynikow(TypGry.MINI_LOTTO);
         miniLotto.execute();
-        if(!dbHelper.czyPobrano(TypGry.MINI_LOTTO, miniLotto.getDataLosowania())){
-            dbHelper.wstawResult(new Results(TypGry.MINI_LOTTO, miniLotto.getDataLosowania(), Type.typowaneNumeryZListy(miniLotto.getWyniki())));
-        }
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(PREF_DATA, DateFormat.getDateInstance().format(calendar2.getTime()));
+        Results miniResult = new Results(TypGry.MINI_LOTTO, miniLotto.getDataLosowania(), Type.typowaneNumeryZListy(miniLotto.getWyniki()));
+        if(!dbHelper.czyPobrano(TypGry.MINI_LOTTO, miniLotto.getDataLosowania()))dbHelper.wstawResult(miniResult);
+        editor.putString(PREF_MINI, Type.typowaneNumeryZListy(miniLotto.getWyniki()));
+        editor.putString(PREF_MINI_DATA, DateFormat.getDateInstance().format(miniLotto.getDataLosowania()));
         editor.commit();
         Toast.makeText(getApplicationContext(), getResources().getString(R.string.pobrano_dane), Toast.LENGTH_LONG).show();
     }

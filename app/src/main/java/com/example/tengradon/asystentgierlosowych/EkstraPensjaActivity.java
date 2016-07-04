@@ -112,7 +112,8 @@ public class EkstraPensjaActivity extends Activity {
             Calendar calendar1 = Calendar.getInstance();
             calendar1.setTime(new Date());
             Calendar calendar2 = Calendar.getInstance();
-            calendar2.setTime(DateFormat.getDateInstance().parse(dataStart.getText().toString()));
+            Date data = simpleDateFormat.parse(dataStart.getText().toString());
+            calendar2.setTime(data);
             if (calendar1.equals(calendar2)) {
                 if (Calendar.HOUR_OF_DAY > 22) {
                     obrabianieWynikow = new ObrabianieWynikow(TypGry.EKSTRA_PENSJA);
@@ -123,7 +124,7 @@ public class EkstraPensjaActivity extends Activity {
                         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                dbHelper.wstawWinner(new Wygrane(id));
+                                dbHelper.wstawWinner(new Wygrane(id, obrabianieWynikow.getDataLosowania()));
                             }
                         });
                         vibrator.vibrate(pattern, -1);
@@ -146,7 +147,7 @@ public class EkstraPensjaActivity extends Activity {
                     builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            dbHelper.wstawWinner(new Wygrane(id));
+                            dbHelper.wstawWinner(new Wygrane(id, obrabianieWynikow.getDataLosowania()));
                         }
                     });
                     vibrator.vibrate(pattern, -1);
@@ -186,8 +187,8 @@ public class EkstraPensjaActivity extends Activity {
         if(isEmpty(liczba4))czyGotowy = false;
         if(isEmpty(liczba5))czyGotowy = false;
         if(isEmpty(liczba6))czyGotowy = false;
-        if(isEmpty(liczba7))czyGotowy = false;
-        if(isEmpty(liczba8))czyGotowy = false;
+        if(ileLiczb>1 && ileLiczb <4)if(isEmpty(liczba7))czyGotowy = false;
+        if(ileLiczb>2 && ileLiczb <4)if(isEmpty(liczba8))czyGotowy = false;
         return czyGotowy;
     }
 

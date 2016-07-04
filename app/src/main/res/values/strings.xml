@@ -23,6 +23,7 @@
     <string name="kupon_o_id">Kupon o id = \u0020</string>
     <string name="jest_zwycieski">\u0020 jest zwycieski w grze \u0020</string>
     <string name="pobrano_dane">Nowe wyniki zostały pobrane</string>
+    <string name="z_dnia">\u0020 z dnia \u0020</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

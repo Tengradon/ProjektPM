@@ -24,6 +24,7 @@
     <string name="kupon_o_id">Ticket with id = \u0020</string>
     <string name="jest_zwycieski">\u0020 won in game of \u0020</string>
     <string name="pobrano_dane">New results have been downloaded</string>
+    <string name="z_dnia">\u0020 with date \u0020</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

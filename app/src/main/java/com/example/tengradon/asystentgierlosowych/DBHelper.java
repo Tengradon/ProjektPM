@@ -36,6 +36,7 @@ public class DBHelper extends SQLiteOpenHelper{
     public static final String WINNER_TABLE_NAME = "wygrane";
     public static final String WINNER_COLUMN_ID = "id";
     public static final String WINNER_COLUMN_ID_TYPE = "idKuponu";
+    public static final String WINNER_COLUMN_DATE = "data";
 
     public DBHelper(Context context) {
         super(context, DB_NAME, null, 1);
@@ -56,7 +57,7 @@ public class DBHelper extends SQLiteOpenHelper{
 
         db.execSQL(
                 "create table " + WINNER_TABLE_NAME +
-                        "(id integer primary key autoincrement, idKuponu integer)"
+                        "(id integer primary key autoincrement, idKuponu integer, data text)"
         );
     }
 
@@ -93,6 +94,7 @@ public class DBHelper extends SQLiteOpenHelper{
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(WINNER_COLUMN_ID_TYPE, wygrane.getIdKuponu());
+        contentValues.put(WINNER_COLUMN_DATE, wygrane.getData());
         return (int) db.insert(WINNER_TABLE_NAME, null, contentValues);
     }
 
@@ -125,7 +127,7 @@ public class DBHelper extends SQLiteOpenHelper{
         ArrayList<Type>typeArrayList = pobierzTypy();
         for(int i = 0; i < typeArrayList.size(); i++){
             try {
-                if((simpleDateFormat.parse(typeArrayList.get(i).getDataOstatniegoLosowania()).after(date))){
+                if((simpleDateFormat.parse(typeArrayList.get(i).getDataOstatniegoLosowania()).before(date))){
                     typeArrayList.remove(i);
                 }
             } catch (ParseException e) {
@@ -195,7 +197,7 @@ public class DBHelper extends SQLiteOpenHelper{
         return resultsArrayList;
     }
 
-    public ArrayList<Wygrane> pobierzWygrane(){
+    public ArrayList<Wygrane> pobierzWygrane() throws ParseException {
         ArrayList<Wygrane>wygraneArrayList = new ArrayList<>();
         String query = "SELECT * FROM " + WINNER_TABLE_NAME;
         SQLiteDatabase db = this.getWritableDatabase();
@@ -206,6 +208,7 @@ public class DBHelper extends SQLiteOpenHelper{
                 wygrane = new Wygrane();
                 wygrane.setId(Integer.parseInt(cursor.getString(0)));
                 wygrane.setIdKuponu(Integer.parseInt(cursor.getString(1)));
+                wygrane.setDataWygrania(simpleDateFormat.parse(cursor.getString(2)));
                 wygraneArrayList.add(wygrane);
             }while(cursor.moveToNext());
         }
@@ -240,6 +243,16 @@ public class DBHelper extends SQLiteOpenHelper{
     public boolean czyPobrano(TypGry typGry, Date date){
         boolean czyIstnieje = false;
         String query = "SELECT " + RESULTS_COLUMN_ID + " from " + RESULTS_TABLE_NAME + " where " + RESULTS_COLUMN_GAME_TYPE + " = " + typGry.getValue() + " and " + RESULTS_COLUMN_DATE + " = " + simpleDateFormat.format(date);
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        int count = cursor.getCount();
+        if(count > 0) czyIstnieje = true;
+        return czyIstnieje;
+    }
+
+    public boolean czyIstnieje(int id, Date date){
+        boolean czyIstnieje = false;
+        String query = "SELECT " + WINNER_COLUMN_ID + " from " + WINNER_TABLE_NAME + " where " + WINNER_COLUMN_ID_TYPE + " = " + id + " and " + WINNER_COLUMN_DATE + " = " + simpleDateFormat.format(date);
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         int count = cursor.getCount();

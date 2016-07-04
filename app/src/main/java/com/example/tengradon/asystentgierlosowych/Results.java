@@ -77,7 +77,9 @@ public class Results {
 
     public ArrayList<Integer> getWylosowaneLiczbyLista(){
         ArrayList<Integer> integerArrayList = new ArrayList<>();
-        String[] liczby = wylosowaneLiczby.split("|");
+        wylosowaneLiczby.trim();
+        wylosowaneLiczby.replaceAll("\\s", "");
+        String[] liczby = wylosowaneLiczby.split("\\|");
         for(int i = 0; i < liczby.length; i++){
             integerArrayList.add(Integer.parseInt(liczby[i]));
         }

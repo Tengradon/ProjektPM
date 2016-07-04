@@ -61,7 +61,8 @@ public class MiniLottoActivity extends Activity {
             Calendar calendar1 = Calendar.getInstance();
             calendar1.setTime(new Date());
             Calendar calendar2 = Calendar.getInstance();
-            calendar2.setTime(DateFormat.getDateInstance().parse(dataStart.getText().toString()));
+            Date data = simpleDateFormat.parse(dataStart.getText().toString());
+            calendar2.setTime(data);
             if (calendar1.equals(calendar2)) {
                 if (Calendar.HOUR_OF_DAY > 22) {
                     obrabianieWynikow = new ObrabianieWynikow(TypGry.MINI_LOTTO);
@@ -72,7 +73,7 @@ public class MiniLottoActivity extends Activity {
                         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                dbHelper.wstawWinner(new Wygrane(id));
+                                dbHelper.wstawWinner(new Wygrane(id, obrabianieWynikow.getDataLosowania()));
                             }
                         });
                         vibrator.vibrate(pattern, -1);
@@ -95,7 +96,7 @@ public class MiniLottoActivity extends Activity {
                     builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            dbHelper.wstawWinner(new Wygrane(id));
+                            dbHelper.wstawWinner(new Wygrane(id, obrabianieWynikow.getDataLosowania()));
                         }
                     });
                     vibrator.vibrate(pattern, -1);
@@ -171,4 +172,3 @@ public class MiniLottoActivity extends Activity {
         finish();
     }
 }
-               

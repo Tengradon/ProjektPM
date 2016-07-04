@@ -72,7 +72,7 @@ public class Type {
 
     public ArrayList<Integer> getTypowaneNumeryLista(){
         ArrayList<Integer> integerArrayList = new ArrayList<>();
-        String[] liczby = typowaneNumery.split("|");
+        String[] liczby = typowaneNumery.split("\\|");
         for(int i = 0; i < liczby.length; i++){
             integerArrayList.add(Integer.parseInt(liczby[i]));
         }
@@ -118,8 +118,10 @@ public class Type {
     public static String typowaneNumeryZListy(ArrayList<Integer> typowaneNumery){
         String mojeTypy = "";
         for(int i = 0; i < typowaneNumery.size(); i++){
-            mojeTypy += typowaneNumery.get(i) + "|";
+            mojeTypy += typowaneNumery.get(i);
+            if(i != typowaneNumery.size() - 1)mojeTypy += "|";
         }
+
         return mojeTypy;
     }
 
